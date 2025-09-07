@@ -18,11 +18,8 @@
                 <p>Discover, read, and connect with amazing blogs from passionate writers around the world. Your
                     ultimate destination for quality content and meaningful stories.</p>
                 <div>
-                    <a href="#featured-posts" role="button">
+                    <a href="{% url 'app:all_posts' %}" role="button">
                         <i data-feather="book-open"></i>Explore Posts
-                    </a>
-                    <a href="#recent-posts" role="button" class="secondary">
-                        <i data-feather="clock"></i>Latest Stories
                     </a>
                 </div>
             </div>
@@ -70,7 +67,7 @@
         </div>
         {% if recent_posts|length >= 6 %}
         <div>
-            <a href="/admin/" role="button">
+            <a href="{% url 'app:all_posts' %}" role="button">
                 <i data-feather="list"></i>View All Posts
             </a>
         </div>

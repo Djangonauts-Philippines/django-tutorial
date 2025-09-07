@@ -35,6 +35,18 @@ def post_detail(request, slug):
     return render(request, "app/post_detail.html", context)
 
 
+def all_posts(request):
+    """
+    View to display all published posts.
+    """
+    posts = Post.objects.filter(is_published=True)
+    context = {
+        "posts": posts,
+        "total_posts": posts.count(),
+    }
+    return render(request, "app/all_posts.html", context)
+
+
 @login_required
 def logout_view(request):
     """

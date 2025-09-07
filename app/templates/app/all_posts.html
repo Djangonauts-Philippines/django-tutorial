@@ -1,0 +1,83 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}All Posts - BlogHub{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<section>
+    <div class="container">
+        <div class="grid">
+            <div>
+                <div>
+                    <small>
+                        <i data-feather="list"></i>Discover All Content
+                    </small>
+                </div>
+                <h1>All Posts</h1>
+                <p>Explore all published posts from our amazing community of writers. Find stories, insights, and
+                    knowledge that inspire you.</p>
+                <div>
+                    <small>
+                        <i data-feather="book"></i>{{ total_posts }} posts available
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- All Posts Section -->
+{% if posts %}
+<section id="all-posts">
+    <div class="container">
+        <div class="grid">
+            {% for post in posts %}
+            <article>
+                <header>
+                    <div>
+                        <small>{{ post.published_at|date:"M d, Y" }}</small>
+                    </div>
+                    <hgroup>
+                        <h6>{{ post.title }}</h6>
+                        <p>
+                            <i data-feather="user"></i>{{ post.author.username }}
+                        </p>
+                    </hgroup>
+                </header>
+                <p>
+                    {% if post.excerpt %}
+                    {{ post.excerpt|truncatewords:20 }}
+                    {% else %}
+                    {{ post.content|truncatewords:20 }}
+                    {% endif %}
+                </p>
+                <footer>
+                    <a href="{{ post.get_absolute_url }}" role="button" class="outline">
+                        Read More <i data-feather="arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<!-- No Posts Section -->
+<section>
+    <div class="container">
+        <div class="grid">
+            <div>
+                <h2>No Posts Available</h2>
+                <p>There are no published posts at the moment. Check back later for amazing content!</p>
+                <div>
+                    <a href="{% url 'app:landing' %}" role="button" class="outline">
+                        <i data-feather="arrow-left"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
