@@ -3,6 +3,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.core.paginator import Paginator
 from .models import Post
 
 
@@ -37,12 +38,19 @@ def post_detail(request, slug):
 
 def all_posts(request):
     """
-    View to display all published posts.
+    View to display all published posts with pagination.
     """
-    posts = Post.objects.filter(is_published=True)
+    posts_list = Post.objects.filter(is_published=True)
+    total_posts = posts_list.count()
+
+    # Paginate the posts
+    paginator = Paginator(posts_list, 10)  # Show 10 posts per page
+    page_number = request.GET.get("page")
+    posts = paginator.get_page(page_number)
+
     context = {
         "posts": posts,
-        "total_posts": posts.count(),
+        "total_posts": total_posts,
     }
     return render(request, "app/all_posts.html", context)
 
