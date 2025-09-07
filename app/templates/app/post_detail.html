@@ -1,0 +1,107 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} - BlogHub{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="grid">
+        <div>
+            <!-- Post Content -->
+            <article>
+                <header>
+                    <div>
+                        <span>
+                            <i data-feather="calendar"></i>{{ post.published_at|date:"F d, Y" }}
+                        </span>
+                        <span>
+                            <i data-feather="user"></i>{{ post.author.username }}
+                        </span>
+                    </div>
+                    <h1>{{ post.title }}</h1>
+                    {% if post.excerpt %}
+                    <p>{{ post.excerpt }}</p>
+                    {% endif %}
+                </header>
+
+                <div>
+                    <div>
+                        {{ post.content|linebreaks }}
+                    </div>
+                </div>
+
+                <footer>
+                    <div>
+                        <div>
+                            <small>
+                                Published on {{ post.published_at|date:"F d, Y \a\t g:i A" }}
+                            </small>
+                        </div>
+                        <div>
+                            <button role="button" class="outline">
+                                <i data-feather="share"></i>Share
+                            </button>
+                            <button role="button" class="secondary">
+                                <i data-feather="bookmark"></i>Save
+                            </button>
+                        </div>
+                    </div>
+                </footer>
+            </article>
+        </div>
+
+        <div>
+            <!-- Sidebar -->
+            <div>
+                <!-- Author Info -->
+                <article>
+                    <header>
+                        <div>
+                            <i data-feather="user"></i>
+                        </div>
+                        <h5>{{ post.author.username }}</h5>
+                        {% if post.author.bio %}
+                        <p>{{ post.author.bio }}</p>
+                        {% endif %}
+                    </header>
+                    <div>
+                        {% if post.author.location %}
+                        <small>
+                            <i data-feather="map-pin"></i>{{ post.author.location }}
+                        </small>
+                        {% endif %}
+                        <small>
+                            <i data-feather="calendar"></i>Joined {{ post.author.date_joined|date:"M Y" }}
+                        </small>
+                    </div>
+                </article>
+
+                <!-- Related Posts -->
+                {% if related_posts %}
+                <article>
+                    <header>
+                        <h6>
+                            <i data-feather="file-text"></i>Related Posts
+                        </h6>
+                    </header>
+                    {% for related_post in related_posts %}
+                    <div>
+                        <h6>
+                            <a href="{{ related_post.get_absolute_url }}">
+                                {{ related_post.title }}
+                            </a>
+                        </h6>
+                        <small>
+                            {{ related_post.published_at|date:"M d, Y" }}
+                        </small>
+                    </div>
+                    {% if not forloop.last %}
+                    <hr>{% endif %}
+                    {% endfor %}
+                </article>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

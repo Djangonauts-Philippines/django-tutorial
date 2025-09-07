@@ -1,0 +1,81 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}BlogHub - Discover Amazing Blogs{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section>
+    <div class="container">
+        <div class="grid">
+            <div>
+                <div>
+                    <small>
+                        <i data-feather="star"></i>Discover Amazing Content
+                    </small>
+                </div>
+                <h1>Welcome to BlogHub</h1>
+                <p>Discover, read, and connect with amazing blogs from passionate writers around the world. Your
+                    ultimate destination for quality content and meaningful stories.</p>
+                <div>
+                    <a href="#featured-posts" role="button">
+                        <i data-feather="book-open"></i>Explore Posts
+                    </a>
+                    <a href="#recent-posts" role="button" class="secondary">
+                        <i data-feather="clock"></i>Latest Stories
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Posts Section -->
+{% if recent_posts %}
+<section id="recent-posts">
+    <div class="container">
+        <div>
+            <h2>
+                <i data-feather="clock"></i>Recent Posts
+            </h2>
+        </div>
+        <div class="grid">
+            {% for post in recent_posts %}
+            <article>
+                <header>
+                    <div>
+                        <small>{{ post.published_at|date:"M d" }}</small>
+                    </div>
+                    <hgroup>
+                        <h6>{{ post.title }}</h6>
+                        <p>
+                            <i data-feather="user"></i>{{ post.author.username }}
+                        </p>
+                    </hgroup>
+                </header>
+                <p>
+                    {% if post.excerpt %}
+                    {{ post.excerpt|truncatewords:15 }}
+                    {% else %}
+                    {{ post.content|truncatewords:15 }}
+                    {% endif %}
+                </p>
+                <footer>
+                    <a href="{{ post.get_absolute_url }}" role="button" class="outline">
+                        Read <i data-feather="arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+            {% endfor %}
+        </div>
+        {% if recent_posts|length >= 6 %}
+        <div>
+            <a href="/admin/" role="button">
+                <i data-feather="list"></i>View All Posts
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

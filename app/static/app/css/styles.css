@@ -1,0 +1,9 @@
+/* Custom styles for BlogHub */
+:root {
+  --pico-font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* Feather Icons Spacing */
+svg {
+  margin-right: 0.5rem;
+}
