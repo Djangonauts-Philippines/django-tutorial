@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.http import Http404
 from .models import Post
 from .forms import PostForm
 
@@ -74,6 +75,28 @@ def create_post(request):
 
     context = {"form": form}
     return render(request, "app/create_post.html", context)
+
+
+@login_required
+def delete_post(request, slug):
+    """
+    View to delete a post. Only the post author can delete their own posts.
+    """
+    post = get_object_or_404(Post, slug=slug)
+
+    # Check if the current user is the author of the post
+    if post.author != request.user:
+        raise Http404("You don't have permission to delete this post.")
+
+    if request.method == "POST":
+        post_title = post.title
+        post.delete()
+        messages.success(request, f"Post '{post_title}' has been deleted successfully.")
+        return redirect("app:landing")
+
+    # If GET request, show confirmation page
+    context = {"post": post}
+    return render(request, "app/delete_post.html", context)
 
 
 @login_required

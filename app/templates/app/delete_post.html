@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Delete Post - BlogHub{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="grid">
+        <div>
+            <article>
+                <header>
+                    <h1>Delete Post</h1>
+                    <p>Are you sure you want to delete this post?</p>
+                </header>
+
+                <div>
+                    <h3>{{ post.title }}</h3>
+                    {% if post.excerpt %}
+                    <p>{{ post.excerpt }}</p>
+                    {% endif %}
+                    <small>
+                        Published on {{ post.published_at|date:"F d, Y \a\t g:i A" }}
+                    </small>
+                </div>
+
+                <footer>
+                    <form method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="contrast">
+                            <i data-feather="trash-2"></i>Yes, Delete Post
+                        </button>
+                    </form>
+                    <a href="{{ post.get_absolute_url }}" role="button" class="secondary">
+                        <i data-feather="arrow-left"></i>Cancel
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}

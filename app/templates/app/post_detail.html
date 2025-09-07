@@ -44,6 +44,11 @@
                             <button role="button" class="secondary">
                                 <i data-feather="bookmark"></i>Save
                             </button>
+                            {% if user.is_authenticated and user == post.author %}
+                            <a href="{% url 'app:delete_post' post.slug %}" role="button" class="contrast">
+                                <i data-feather="trash-2"></i>Delete
+                            </a>
+                            {% endif %}
                         </div>
                     </div>
                 </footer>
