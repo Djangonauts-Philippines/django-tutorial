@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .models import Post
+from .forms import PostForm
 
 
 def landing_page(request):
@@ -53,6 +54,26 @@ def all_posts(request):
         "total_posts": total_posts,
     }
     return render(request, "app/all_posts.html", context)
+
+
+@login_required
+def create_post(request):
+    """
+    View to create a new post.
+    """
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, "Post created successfully!")
+            return redirect(post.get_absolute_url())
+    else:
+        form = PostForm()
+
+    context = {"form": form}
+    return render(request, "app/create_post.html", context)
 
 
 @login_required

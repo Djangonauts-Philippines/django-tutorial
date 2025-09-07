@@ -1,0 +1,141 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block title %}Create New Post - BlogHub{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="grid">
+        <div>
+            <header>
+                <h1>
+                    <i data-feather="edit-3"></i>Create New Post
+                </h1>
+                <p>Share your thoughts and ideas with the world</p>
+            </header>
+
+            <!-- Display messages -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Post Creation Form -->
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="grid">
+                    <div>
+                        <label for="{{ form.title.id_for_label }}">
+                            {{ form.title.label }}
+                            {% if form.title.help_text %}
+                            <small>{{ form.title.help_text }}</small>
+                            {% endif %}
+                        </label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                        <small class="error">{{ form.title.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.slug.id_for_label }}">
+                            {{ form.slug.label }}
+                            {% if form.slug.help_text %}
+                            <small>{{ form.slug.help_text }}</small>
+                            {% endif %}
+                        </label>
+                        {{ form.slug }}
+                        {% if form.slug.errors %}
+                        <small class="error">{{ form.slug.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="{{ form.excerpt.id_for_label }}">
+                        {{ form.excerpt.label }}
+                        {% if form.excerpt.help_text %}
+                        <small>{{ form.excerpt.help_text }}</small>
+                        {% endif %}
+                    </label>
+                    {{ form.excerpt }}
+                    {% if form.excerpt.errors %}
+                    <small class="error">{{ form.excerpt.errors.0 }}</small>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.content.id_for_label }}">
+                        {{ form.content.label }}
+                        {% if form.content.help_text %}
+                        <small>{{ form.content.help_text }}</small>
+                        {% endif %}
+                    </label>
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                    <small class="error">{{ form.content.errors.0 }}</small>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.is_published.id_for_label }}">
+                        {{ form.is_published }}
+                        {{ form.is_published.label }}
+                        {% if form.is_published.help_text %}
+                        <small>{{ form.is_published.help_text }}</small>
+                        {% endif %}
+                    </label>
+                    {% if form.is_published.errors %}
+                    <small class="error">{{ form.is_published.errors.0 }}</small>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <button type="submit" class="primary">
+                        <i data-feather="save"></i>Create Post
+                    </button>
+                    <a href="{% url 'app:landing' %}" role="button" class="secondary">
+                        <i data-feather="arrow-left"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div>
+            <!-- Help Section -->
+            <article>
+                <header>
+                    <h5>
+                        <i data-feather="help-circle"></i>Writing Tips
+                    </h5>
+                </header>
+                <ul>
+                    <li><strong>Title:</strong> Make it catchy and descriptive</li>
+                    <li><strong>Slug:</strong> Use lowercase, no spaces, hyphens for separation</li>
+                    <li><strong>Excerpt:</strong> A short preview that appears in post listings</li>
+                    <li><strong>Content:</strong> Write your full post content here</li>
+                    <li><strong>Publish:</strong> Check to make your post visible immediately</li>
+                </ul>
+            </article>
+
+            <!-- Preview Section -->
+            <article>
+                <header>
+                    <h5>
+                        <i data-feather="eye"></i>Preview
+                    </h5>
+                </header>
+                <p>Your post will appear on the landing page and be accessible via its unique URL slug.</p>
+                <small>
+                    <i data-feather="info"></i>
+                    You can always edit your post later from the admin panel.
+                </small>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}

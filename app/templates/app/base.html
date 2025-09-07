@@ -19,6 +19,9 @@
         </ul>
         <ul>
             {% if user.is_authenticated %}
+            <li><a href="{% url 'app:create_post' %}">
+                    <i data-feather="edit-3"></i>Write Post
+                </a></li>
             <li>
                 <details role="list" dir="rtl">
                     <summary aria-haspopup="listbox" role="link">{{ user.username }}</summary>
