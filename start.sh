@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "Starting Django server..."
-gunicorn -b 0.0.0.0 -p $PORT djangotutorial.asgi:application
+gunicorn -b 0.0.0.0 -p $PORT djangotutorial.wsgi:application
