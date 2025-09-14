@@ -1,7 +1,7 @@
 databases:
   - name: django-tutorial-db
     region: singapore
-    plan: free-256mb
+    plan: free
     ipAllowList: []
 
 services:
