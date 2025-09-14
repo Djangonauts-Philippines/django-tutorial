@@ -1,0 +1,29 @@
+databases:
+  - name: django-tutorial-db
+    region: singapore
+    plan: free-256mb
+    ipAllowList: []
+
+services:
+  - type: web
+    plan: free
+    runtime: python
+    name: django-tutorial-server
+    region: singapore
+    buildCommand: "./build.sh"
+    startCommand: "./start.sh"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: "djangotutorial.settings"
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DATABASE_URL
+        fromDatabase:
+          name: django-tutorial-db
+          property: connectionString
+      - key: DEBUG
+        value: "False"
+      - key: APP_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
